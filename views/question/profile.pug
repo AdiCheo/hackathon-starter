@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Question Information
+
+  form.form-horizontal(action='/question/profile', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='email') Title
+      .col-sm-7
+        input.form-control(type='email', name='email', id='email', value=user.email)
+    .form-group
+      label.col-sm-3.control-label(for='name') Link
+      .col-sm-7
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Update Question
+
+  .page-header
+    h3 Delete Question
+
+  form.form-horizontal(action='/question/delete', method='POST')
+    .form-group
+      p.col-sm-offset-3.col-sm-4 You can delete your question, but keep in mind this action is irreversible.
+      input(type='hidden', name='_csrf', value=_csrf)
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn-danger(type='submit')
+          i.fa.fa-trash
+          | Delete question
