@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Users
+
+  form.form-horizontal
+    .form-group
+      label.col-sm-3.control-label(for='email') Email
+      .col-sm-7
+        input.form-control(type='email', name='email', id='email', value=user.email)
