@@ -5,9 +5,9 @@ const Question = require('../models/Question');
  * Create question page.
  */
 exports.getCreate = (req, res) => {
-  if (req.question) {
-    return res.redirect('/');
-  }
+  // if (req.question) {
+  //   return res.redirect('/');
+  // }
   res.render('question/create', {
     title: 'Create Question'
   });
