@@ -60,7 +60,7 @@ exports.postCreate = (req, res, next) => {
 exports.getQuestion = (req, res) => {
   // const id = req.params.id;
   res.render('question/profile', {
-    title: 'Account Management'
+    title: 'Question'
   });
 };
 

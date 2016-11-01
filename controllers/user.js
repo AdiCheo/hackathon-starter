@@ -120,6 +120,16 @@ exports.getAccount = (req, res) => {
 };
 
 /**
+ * GET /users
+ * User list page.
+ */
+exports.getUsers = (req, res) => {
+  res.render('account/users', {
+    title: 'Users'
+  });
+};
+
+/**
  * POST /account/profile
  * Update profile information.
  */
