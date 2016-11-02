@@ -139,6 +139,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 /**
  * Question routes.
  */
+app.get('/questions', questionController.getQuestions);
 app.get('/question/create', questionController.getCreate);
 app.post('/question/create', questionController.postCreate);
 app.get('/question/:id', questionController.getQuestion);

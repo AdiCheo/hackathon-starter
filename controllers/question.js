@@ -57,7 +57,7 @@ exports.postCreate = (req, res, next) => {
       //   if (err) {
       //     return next(err);
       //   }
-      res.redirect('/question/list');
+      res.redirect('/questions');
       // });
     });
   });
