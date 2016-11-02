@@ -1,7 +1,17 @@
 const Question = require('../models/Question');
 
 /**
- * GET /create
+ * GET /questions
+ * Question list page.
+ */
+exports.getQuestions = (req, res) => {
+  Question.find((err, docs) => {
+    res.render('question/list', { questions: docs });
+  });
+};
+
+/**
+ * GET /question/create
  * Create question page.
  */
 exports.getCreate = (req, res) => {
@@ -18,37 +28,37 @@ exports.getCreate = (req, res) => {
  * Create a new question.
  */
 exports.postCreate = (req, res, next) => {
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
-  req.sanitize('email').normalizeEmail({ remove_dots: false });
+  // req.assert('question_text', 'Email is not valid').isEmail();
+  // req.assert('answer_text', 'Password must be at least 4 characters long').len(4);
+  // req.assert('confirmPassword', 'Passwords do not match').equals(req.body.answer_text);
+  // req.sanitize('question_text').normalizeEmail({ remove_dots: false });
 
   const errors = req.validationErrors();
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/signup');
+    return res.redirect('/question/create');
   }
 
   const question = new Question({
-    email: req.body.email,
-    password: req.body.password
+    question_text: req.body.question_text,
+    answer_text: req.body.answer_text
   });
 
-  Question.findOne({ email: req.body.email }, (err, existingQuestion) => {
+  Question.findOne({ question_text: req.body.question_text }, (err, existingQuestion) => {
     if (err) { return next(err); }
     if (existingQuestion) {
-      req.flash('errors', { msg: 'Account with that email address already exists.' });
-      return res.redirect('/signup');
+      req.flash('errors', { msg: 'Account with that question_text address already exists.' });
+      return res.redirect('/question/create');
     }
     question.save((err) => {
       if (err) { return next(err); }
-      req.logIn(question, (err) => {
-        if (err) {
-          return next(err);
-        }
-        res.redirect('/');
-      });
+      // req.logIn(question, (err) => {
+      //   if (err) {
+      //     return next(err);
+      //   }
+      res.redirect('/question/list');
+      // });
     });
   });
 };
@@ -69,8 +79,8 @@ exports.getQuestion = (req, res) => {
  * Update profile information.
  */
 exports.postUpdateProfile = (req, res, next) => {
-  req.assert('email', 'Please enter a valid email address.').isEmail();
-  req.sanitize('email').normalizeEmail({ remove_dots: false });
+  req.assert('question_text', 'Please enter a valid question_text address.').isEmail();
+  req.sanitize('question_text').normalizeEmail({ remove_dots: false });
 
   const errors = req.validationErrors();
 
@@ -81,7 +91,7 @@ exports.postUpdateProfile = (req, res, next) => {
 
   Question.findById(req.question.id, (err, question) => {
     if (err) { return next(err); }
-    question.email = req.body.email || '';
+    question.question_text = req.body.question_text || '';
     question.profile.name = req.body.name || '';
     question.profile.gender = req.body.gender || '';
     question.profile.location = req.body.location || '';
@@ -89,7 +99,7 @@ exports.postUpdateProfile = (req, res, next) => {
     question.save((err) => {
       if (err) {
         if (err.code === 11000) {
-          req.flash('errors', { msg: 'The email address you have entered is already associated with an question.' });
+          req.flash('errors', { msg: 'The question_text address you have entered is already associated with an question.' });
           return res.redirect('/question');
         }
         return next(err);

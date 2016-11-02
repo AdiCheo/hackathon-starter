@@ -136,10 +136,13 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-app.get('/question', questionController.getQuestion);
-app.get('/question/:id', questionController.getQuestion);
+/**
+ * Question routes.
+ */
 app.get('/question/create', questionController.getCreate);
 app.post('/question/create', questionController.postCreate);
+app.get('/question/:id', questionController.getQuestion);
+// app.get('/question', questionController.getQuestion);
 
 /**
  * API examples routes.

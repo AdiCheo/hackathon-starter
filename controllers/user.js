@@ -125,7 +125,7 @@ exports.getAccount = (req, res) => {
  */
 exports.getUsers = (req, res) => {
   User.find((err, docs) => {
-    res.render('account/users', { users: docs });
+    res.render('account/list', { users: docs });
   });
 };
 
